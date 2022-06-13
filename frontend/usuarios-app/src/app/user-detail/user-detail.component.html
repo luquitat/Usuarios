@@ -1,0 +1,25 @@
+<div *ngIf="user"class="">
+  <h2>{{user.name | uppercase}} Detalle</h2>
+  <div><span>id: </span>{{user.id}}</div>
+  <div class="flex-column">
+  	<mat-form-field class="" appearance="fill">
+	    <mat-label>Nombre</mat-label>
+	    <input matInput placeholder="Nombre de usuario" [(ngModel)]="user.name">
+  	</mat-form-field>
+  	<mat-form-field class="" appearance="fill">
+	    <mat-label>Apellido</mat-label>
+	    <input matInput placeholder="Apellido de usuario" [(ngModel)]="user.lastname">
+  	</mat-form-field>
+  	<mat-form-field class="" appearance="fill">
+	    <mat-label>Edad</mat-label>
+	    <input matInput placeholder="Edad de usuario" [(ngModel)]="user.age">
+  	</mat-form-field>
+  	<mat-form-field class="" appearance="fill">
+	    <mat-label>Fecha de nacimiento</mat-label>
+	    <input matInput placeholder="Fecha de nacimiento" [(ngModel)]="user.birthDate">
+  	</mat-form-field>
+  </div>
+  <button mat-raised-button (click)="goBack()" color="primary">Volver</button>
+  <button mat-raised-button (click)="save()" color="warn">Guardar</button>
+
+</div>

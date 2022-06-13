@@ -1,0 +1,37 @@
+
+<div class="flex-row">
+<div>
+	<h2>Agregar usuario</h2>
+  <div class="flex-column" style="width: 25rem">
+  	<mat-form-field class="" appearance="fill">
+	    <mat-label>Nombre</mat-label>
+	    <input matInput placeholder="Nombre de usuario" [(ngModel)]="name">
+  	</mat-form-field>
+  	<mat-form-field class="" appearance="fill">
+	    <mat-label>Apellido</mat-label>
+	    <input matInput placeholder="Apellido de usuario" [(ngModel)]="lastname">
+  	</mat-form-field>
+  	<mat-form-field class="" appearance="fill">
+	    <mat-label>Edad</mat-label>
+	    <input matInput placeholder="Edad de usuario" [(ngModel)]="age">
+  	</mat-form-field>
+  	<mat-form-field class="" appearance="fill">
+	    <mat-label>Fecha de nacimiento</mat-label>
+	    <input matInput placeholder="Fecha de nacimiento" [(ngModel)]="birthDate">
+  	</mat-form-field>
+  </div>
+<button mat-raised-button (click)="add()" color="warn">Agregar</button>
+</div>
+<div>
+	<h2>Lista de usuarios</h2>
+	<ul class="heroes">
+  <li *ngFor="let user of users">
+    <a routerLink="/detail/{{user.id}}">
+      <span class="badge">{{user.id}}</span> {{user.name}}
+    </a>
+    <button type="button" class="delete" title="delete hero"
+      (click)="delete(user)">x</button>
+  </li>
+</ul>
+</div>
+</div>

@@ -1,0 +1,15 @@
+@media (min-width: 860px) {
+ mat-form-field{
+    width: 20%;
+ }
+  }
+
+  .flex-row{
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column{
+  display: flex;
+  flex-direction: column;
+}
