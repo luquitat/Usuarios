@@ -19,8 +19,18 @@
 	    <mat-label>Fecha de nacimiento</mat-label>
 	    <input matInput placeholder="Fecha de nacimiento" [(ngModel)]="birthDate">
   	</mat-form-field>
+  	<div>
+  		<mat-form-field class="" appearance="fill" style="width: 17.6rem;">
+	    <mat-label>Chiste</mat-label>
+	    <textarea matInput placeholder="Chiste" [(ngModel)]="joke"></textarea>
+  	</mat-form-field>
+  	  	<button mat-raised-button (click)="getJoke()" color="accent" style="padding: 1rem;
+    top: -1rem;">Buscar chiste</button>
+
+  	</div>
+  	
   </div>
-<button mat-raised-button (click)="add()" color="warn">Agregar</button>
+<button mat-raised-button (click)="add()" color="warn">Agregar usuario</button>
 </div>
 <div>
 	<h2>Lista de usuarios</h2>
@@ -33,5 +43,12 @@
       (click)="delete(user)">x</button>
   </li>
 </ul>
+</div>
+<div *ngIf="isLoading" class='overlay'
+   style="display: flex; justify-content: center; align-items: center;">
+  <mat-progress-spinner 
+    color="primary" 
+    mode="indeterminate">
+  </mat-progress-spinner>
 </div>
 </div>

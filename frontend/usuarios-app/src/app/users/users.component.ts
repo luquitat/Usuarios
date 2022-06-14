@@ -17,6 +17,8 @@ export class UsersComponent implements OnInit {
   lastname:string = '';
   age:number = 0;
   birthDate:string = '';
+  joke:string = '';
+  isLoading = false;
 
   constructor(private userService: UserService, private location: Location) { }
 
@@ -25,8 +27,10 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers(): void {
+    this.isLoading = true;
     this.userService.getUsers()
-    .subscribe(users => this.users = users);
+    .subscribe(users => {this.users = users
+      this.isLoading = false;});
   }
 
   add(): void {
@@ -35,20 +39,27 @@ export class UsersComponent implements OnInit {
       name: this.name,
       lastname: this.lastname,
       age:this.age,
-      birthDate: this.birthDate
+      birthDate: this.birthDate,
+      joke: this.joke
     }
+    this.isLoading = true;
     if (!user) { return; }
     this.userService.addUser(user)
       .subscribe(user => {
         this.users.push(user);
+        this.isLoading = false;
+        this.clear();
+        this.goBack();
       });
 
-    this.clear();
-    this.goBack();
+    
   }
 
   delete(user: User): void {
-    this.users = this.users.filter(h => h !== user);
+    this.isLoading = true;
+    this.users = this.users.filter(u => {
+      u !== user
+      this.isLoading = true;});
     this.userService.deleteUser(user.id).subscribe();
   }
   clear(): void{
@@ -59,5 +70,12 @@ export class UsersComponent implements OnInit {
   }
   goBack(): void {
     this.location.back();
+  }
+  getJoke():void {
+    this.isLoading = true;
+     this.userService.getJoke()
+        .subscribe(j => {this.joke = j.joke
+          this.isLoading = false;
+        });
   }
 }

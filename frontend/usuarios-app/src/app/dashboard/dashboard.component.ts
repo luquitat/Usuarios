@@ -11,7 +11,7 @@ import { UserService } from '../user.service';
 })
 export class DashboardComponent implements OnInit {
   users: User[] = [];
-
+  isLoading = true;
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
@@ -21,5 +21,10 @@ export class DashboardComponent implements OnInit {
   getUsers(): void {
     this.userService.getUsers()
       .subscribe(users => this.users = users.reverse().slice(0, 3));
+  }
+
+   delete(user: User): void {
+    this.users = this.users.filter(u => u !== user);
+    this.userService.deleteUser(user.id).subscribe();
   }
 }

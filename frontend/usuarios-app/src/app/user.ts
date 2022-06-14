@@ -4,5 +4,6 @@ export interface User {
 	lastname: string,
 	age: number,
 	birthDate: string
+	joke?: string
 }
 

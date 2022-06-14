@@ -48,19 +48,6 @@ export class UserService {
     );
   }
 
-  /* GET heroes whose name contains search term */
-  /*searchUsers(term: string): Observable<User[]> {
-    if (!term.trim()) {
-      // if not search term, return empty hero array.
-      return of([]);
-    }
-    return this.http.get<User[]>(`${this.user}/?name=${term}`).pipe(
-      tap(x => x.length ?
-         this.log(`found heroes matching "${term}"`) :
-         this.log(`no heroes matching "${term}"`)),
-      catchError(this.handleError<Hero[]>('searchHeroes', []))
-    );
-  }*/
 
   addUser(user: User): Observable<User> {
     return this.http.post<User>(this.userUrl + 'usuarios', user, this.httpOptions).pipe(
@@ -73,14 +60,20 @@ export class UserService {
     const url = `${this.userUrl}usuarios/${id}`;
 
     return this.http.delete<User>(url, this.httpOptions).pipe(
-      catchError(this.handleError<User>('deleteUser'))
+      catchError(this.handleError<User>('deleteUser')) 
     );
   }
 
-  /** PUT: update the hero on the server */
   updateUser(user: User): Observable<any> {
-    return this.http.put(`${this.userUrl}usuario/${user.id}`, user, this.httpOptions).pipe(
+    return this.http.post(`${this.userUrl}usuario/${user.id}`, user, this.httpOptions).pipe(
       catchError(this.handleError<any>('updateUser'))
+    );
+  }
+
+  getJoke(): Observable<any> {
+    const url = "https://v2.jokeapi.dev/joke/Any?blacklistFlags=religious,political&type=single"
+    return this.http.get<any>(url).pipe(
+      catchError(this.handleError<any>(`getJoke`))
     );
   }
 

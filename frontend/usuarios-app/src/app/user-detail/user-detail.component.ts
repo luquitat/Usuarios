@@ -12,7 +12,15 @@ import { UserService } from '../user.service';
   styleUrls: ['./user-detail.component.css']
 })
 export class UserDetailComponent  implements OnInit {
-  user: User | undefined;
+  user: User = {
+    id:0,
+    name: '',
+    lastname: '',
+    birthDate: '',
+    age: 0,
+    joke: ''
+  };
+  isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,14 +30,14 @@ export class UserDetailComponent  implements OnInit {
 
   ngOnInit(): void {
     this.getUser();
-    console.log(this.user)
   }
 
   getUser(): void {
-    console.log(this.route.snapshot.paramMap.get('id')!)
+    this.isLoading = true
     const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
     this.userService.getUser(id)
-      .subscribe(user => this.user = user);
+      .subscribe(user => {this.user = user
+        this.isLoading = false});
   }
 
   goBack(): void {
@@ -38,9 +46,18 @@ export class UserDetailComponent  implements OnInit {
 
   save(): void {
     if (this.user) {
+      this.isLoading = true
       this.userService.updateUser(this.user)
-        .subscribe(() => this.goBack());
+        .subscribe(() => {this.goBack()
+          this.isLoading = false});
     }
+  }
+
+  getJoke():void {
+    this.isLoading = true
+     this.userService.getJoke()
+        .subscribe(j => {this.user.joke = j.joke
+          this.isLoading = false});
   }
 
 }

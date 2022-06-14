@@ -1,7 +1,14 @@
-<div *ngIf="user"class="">
-  <h2>{{user.name | uppercase}} Detalle</h2>
-  <div><span>id: </span>{{user.id}}</div>
-  <div class="flex-column">
+<div *ngIf="user"class="flex-row" >
+	<div>
+  <h2>Usuario {{user.id}} - {{user.name | uppercase}} {{user.lastname | uppercase}}</h2>
+  <div *ngIf="isLoading" class="overlay" 
+   style="display: flex; justify-content: center; align-items: center;">
+  <mat-progress-spinner 
+    color="primary" 
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>
+  <div class="flex-column" style="width: 25rem">
   	<mat-form-field class="" appearance="fill">
 	    <mat-label>Nombre</mat-label>
 	    <input matInput placeholder="Nombre de usuario" [(ngModel)]="user.name">
@@ -18,8 +25,17 @@
 	    <mat-label>Fecha de nacimiento</mat-label>
 	    <input matInput placeholder="Fecha de nacimiento" [(ngModel)]="user.birthDate">
   	</mat-form-field>
+  	<div>
+  		<mat-form-field class="" appearance="fill" style="width: 17rem;">
+	    <mat-label>Chiste</mat-label>
+	    <textarea matInput placeholder="Chiste" [(ngModel)]="user.joke"></textarea>
+  	</mat-form-field>
+  	<button mat-raised-button (click)="getJoke()" color="accent" style="padding: 1rem; top: -1rem;">Cambiar chiste</button>
+  	</div>
+  	
   </div>
   <button mat-raised-button (click)="goBack()" color="primary">Volver</button>
   <button mat-raised-button (click)="save()" color="warn">Guardar</button>
+</div>
 
 </div>
