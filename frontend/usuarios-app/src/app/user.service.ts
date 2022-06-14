@@ -21,7 +21,7 @@ export class UserService {
     private http: HttpClient) { }
 
 
-  /** GET heroes from the server */
+  /** GET usuarios del servidor */
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.userUrl + 'usuarios')
       .pipe(
@@ -29,18 +29,7 @@ export class UserService {
       );
   } 
 
-  /** GET hero by id. Return `undefined` when id not found */
-  getUserNo404<Data>(id: number): Observable<User> {
-    const url = `${this.userUrl}usuario/${id}`;
-    return this.http.get<User[]>(url)
-      .pipe(
-        map(users => users[0]), // returns a {0|1} element array
-        
-        catchError(this.handleError<User>(`getUser id=${id}`))
-      );
-  }
-
-  /** GET hero by id. Will 404 if id not found */
+  /** GET usuario por id */
   getUser(id: number): Observable<User> {
     const url = `${this.userUrl}usuario/${id}`;
     return this.http.get<User>(url).pipe(
@@ -48,14 +37,14 @@ export class UserService {
     );
   }
 
-
+  /** POST: agregar usuario nuevo*/
   addUser(user: User): Observable<User> {
     return this.http.post<User>(this.userUrl + 'usuarios', user, this.httpOptions).pipe(
       catchError(this.handleError<User>('addUser'))
     );
   }
 
-  /** DELETE: delete the hero from the server */
+  /** DELETE: eliminar usuario del servidor */
   deleteUser(id: number): Observable<User> {
     const url = `${this.userUrl}usuarios/${id}`;
 
@@ -63,34 +52,26 @@ export class UserService {
       catchError(this.handleError<User>('deleteUser')) 
     );
   }
-
+  /** PUT: editar usuario por id */
   updateUser(user: User): Observable<any> {
-    return this.http.post(`${this.userUrl}usuario/${user.id}`, user, this.httpOptions).pipe(
+    return this.http.put(`${this.userUrl}usuario/${user.id}`, user, this.httpOptions).pipe(
       catchError(this.handleError<any>('updateUser'))
     );
   }
-
+  /** GET chiste aleatorio */
   getJoke(): Observable<any> {
-    const url = "https://v2.jokeapi.dev/joke/Any?blacklistFlags=religious,political&type=single"
+    const url = "https://v2.jokeapi.dev/joke/Programming"
     return this.http.get<any>(url).pipe(
       catchError(this.handleError<any>(`getJoke`))
     );
   }
 
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   *
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
+  /** Loguear error*/
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      console.error(error); 
 
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }

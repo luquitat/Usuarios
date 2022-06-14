@@ -57,10 +57,11 @@ export class UsersComponent implements OnInit {
 
   delete(user: User): void {
     this.isLoading = true;
-    this.users = this.users.filter(u => {
-      u !== user
-      this.isLoading = true;});
-    this.userService.deleteUser(user.id).subscribe();
+    this.users = this.users.filter(u => u !== user
+     );
+    this.userService.deleteUser(user.id).subscribe(u => {
+      this.isLoading = false;
+    });
   }
   clear(): void{
     this.name = ''

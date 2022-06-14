@@ -13,12 +13,13 @@ const usuarios = [
 ];
 
 
-
+//Devuelve todos los usuarios
 app.get('/api/usuarios', (req, res) => {
 	console.log(`Buscando todos los usuarios`)
 	res.send(usuarios);
 });
 
+//Devuelve un usuario específico
 app.get('/api/usuario/:id', (req, res) => {
 	console.log(`Buscando el usuario con id ${req.params.id}`)
 	let usuario = usuarios.find(u => u.id === parseInt(req.params.id))
@@ -30,8 +31,9 @@ app.get('/api/usuario/:id', (req, res) => {
 	res.send(usuario);
 });
 
+//Guarda un usuario
 app.post('/api/usuarios', (req, res) => {
-	let id = usuarios.length + 1
+	let id = usuarios[usuarios.length - 1].id + 1
 	const usuario = {
 		id: id,
 		name: req.body.name,
@@ -45,10 +47,11 @@ app.post('/api/usuarios', (req, res) => {
 	res.send(usuario)
 });
 
-app.post('/api/usuario/:id', (req, res) => {
+//Edita un usuario
+app.put('/api/usuario/:id', (req, res) => {
 
 	let usuario = usuarios.find(u => u.id === parseInt(req.params.id))
-	console.log(`Editando el usuario ${usuario.name}`)
+	
 	if (!usuario) res.status(404).send('El usuario no fue encontrado')
 		
 	usuario.name = req.body.name;
@@ -56,10 +59,11 @@ app.post('/api/usuario/:id', (req, res) => {
 	usuario.age = req.body.age;
 	usuario.birthDate = req.body.birthDate;
 	usuario.joke = req.body.joke;
-
+	console.log(`Se editó el usuario ${usuario.name}`)
 	res.send(usuario);
 });
 
+//Elimina un usuario
 app.delete('/api/usuarios/:id', (req, res) => {
 	let usuario = usuarios.find(u => u.id === parseInt(req.params.id))
 	if (!usuario) {
@@ -68,7 +72,7 @@ app.delete('/api/usuarios/:id', (req, res) => {
 	}
 	const index = usuarios.indexOf(usuario);
 	usuarios.splice(index, 1)
-	
+	console.log(`Se eliminó el usuario ${usuario.name}`)
 	res.send(usuario);
 });
 
